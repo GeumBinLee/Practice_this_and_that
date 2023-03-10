@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from .models import User
-from .serializers import UserRisedNumListSerializer, GenderZipCodeSerializer
+from .serializers import UserRisedNumListSerializer, GenderZipCodeSerializer, CareerPeriodSerializer
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.response import Response
 from rest_framework import status
@@ -10,7 +10,7 @@ from rest_framework.permissions import AllowAny
 # Create your views here.
 
 # 주민번호 안 1의 개수
-class CountOneInRisedNum(APIView) :
+class CountOneInRisedNumView(APIView) :
     
     permission_classes = [AllowAny]
     
@@ -25,7 +25,7 @@ class CountOneInRisedNum(APIView) :
     
     
 # 성별 우편번호 모두 더하기
-class SumZipCodeByGender(APIView) :
+class SumZipCodeByGenderView(APIView) :
     
     permission_classes = [AllowAny]
     @swagger_auto_schema(
@@ -51,3 +51,19 @@ class SumZipCodeByGender(APIView) :
             
         return Response({'여자 우편 번호 합' : woman_sum, '남자 우편 번호 합' : guy_sum},
                         status=status.HTTP_200_OK)
+
+
+# 입사일의 전월말일 구하고 퇴사일과 차이나는 시간 구하기
+# 퇴사일이 없으면 현재 일자 기준으로 구하기
+class CareerPeriodView(APIView) :
+    
+    permission_classes = [AllowAny]
+    @swagger_auto_schema(
+        operation_summary = "재직 기간 구하기",
+        responses = {200: "성공", 404 : "찾을 수 없음", 500 : "서버 에러"},
+    )
+    
+    def get(self, request) :
+        users = User.objects.all()
+        serializers = CareerPeriodSerializer(users, many=True)
+        return Response(serializers.data, status=status.HTTP_200_OK)
