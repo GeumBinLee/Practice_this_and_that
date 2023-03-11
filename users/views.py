@@ -1,13 +1,19 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from .models import User
-from .serializers import UserRisedNumListSerializer, GenderZipCodeSerializer, CareerPeriodSerializer
+from .serializers import (UserRisedNumListSerializer,
+                          GenderZipCodeSerializer,
+                          CareerPeriodSerializer,
+                          UserRisedNumWithStarSerializer)
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import AllowAny
+from django.utils import timezone
+from datetime import datetime, timedelta
+import time
 
-# Create your views here.
+
 
 # 주민번호 안 1의 개수
 class CountOneInRisedNumView(APIView) :
@@ -65,5 +71,38 @@ class CareerPeriodView(APIView) :
     
     def get(self, request) :
         users = User.objects.all()
-        serializers = CareerPeriodSerializer(users, many=True)
-        return Response(serializers.data, status=status.HTTP_200_OK)
+        dates = CareerPeriodSerializer(users, many=True)
+        
+        for date in dates.data :
+            if not date["retire"] :
+                date["retire"] = datetime.now().date().strftime('%Y-%m-%d')
+                
+            retire_date = datetime.strptime(date["retire"], '%Y-%m-%d')
+            ent_date = datetime.strptime(date['ent'], '%Y-%m-%d')
+            # last month last day
+            lmld = ent_date.replace(day=1) - timedelta(days=1)
+            date["전월말일"] = lmld
+            
+            period = (retire_date - lmld).days
+            if period > 365 :
+                year = period//365
+                day = period%365
+                date["재직기간"] = f"{year}년 {day}일 근무"
+            else :
+                date["재직기간"] = f"{period}일 근무"
+            
+        return Response(dates.data, status=status.HTTP_200_OK)
+    
+
+# 주민등록번호 뒷자리 * 표시
+class UserRisedNumWithStarView(APIView) :
+    permission_classes = [AllowAny]
+    @swagger_auto_schema(
+        operation_summary = "주민번호 뒷자리 별처리",
+        responses = {200: "성공", 404 : "찾을 수 없음", 500 : "서버 에러"},
+    )
+    
+    def get(self, request) :
+        users = User.objects.all()
+        serializer = UserRisedNumWithStarSerializer(users, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

@@ -14,6 +14,22 @@ class UserRisedNumListSerializer(serializers.ModelSerializer) :
     
     def get_rised_num(self, obj) :
         return obj.rised_num.count("1")
+
+
+class UserRisedNumWithStarSerializer(serializers.ModelSerializer) :
+    
+    class Meta :
+        model = User
+        fields= ("emp_name","rised_num",)
+        
+    rised_num = serializers.SerializerMethodField()
+    
+    def get_rised_num(self, obj) :
+        rn = ""
+        if obj.rised_num :
+            rn = obj.rised_num.split('-')[0] + "-" + '*'*len(obj.rised_num.split('-')[1])
+        return rn
+    
     
     
     
@@ -32,17 +48,9 @@ class GenderZipCodeSerializer(serializers.ModelSerializer) :
 
 
 class CareerPeriodSerializer(serializers.ModelSerializer) :
+    ent = serializers.DateField(format='%Y-%m-%d', input_formats = '%Y-%m-%d', source = 'ent_date', read_only = True, default = timezone.now)
+    retire = serializers.DateField(format='%Y-%m-%d', input_formats = '%Y-%m-%d', source = 'retire_date', read_only = True, default = timezone.now)
     
     class Meta :
         model = User
-        fields = ("emp_name", "ent_date", "retire_date",)
-        
-        retire_date = serializers.SerializerMethodField()
-        
-        def get_retire_date(self, obj) :
-            last_month_last_day = obj.ent_date - timezone.timedelta(months=1)
-            if not obj.retire_date :
-                diff = timezone.now() - last_month_last_day
-            else :
-                diff = obj.retire_date - last_month_last_day
-            return type(obj.retire_date)
+        fields = ("emp_name", "ent", "retire",)
