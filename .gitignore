@@ -200,6 +200,9 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# database
+my_settings.py
+
 ### macOS Patch ###
 # iCloud generated files
 *.icloud
