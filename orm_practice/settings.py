@@ -66,19 +66,19 @@ WSGI_APPLICATION = 'orm_practice.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-MYSQL = my_settings.DATABASES
-if MYSQL :
-    DATABASES = MYSQL
-else :
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-            'TEST' : {
-            'NAME' : BASE_DIR / "db.sqlite3",
-            },
-        }
+# MYSQL = my_settings.DATABASES
+# if MYSQL :
+#     DATABASES = MYSQL
+# else :
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+        'TEST' : {
+        'NAME' : BASE_DIR / "db.sqlite3",
+        },
     }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

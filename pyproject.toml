@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "orm-practice"
+version = "0.1.0"
+description = "입사 첫째 날에 푼 sql문을 orm으로 뽑아내 보았다."
+authors = ["금빈"]
+readme = "README.md"
+packages = [{include = "orm_practice"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^4.1.7"
+djangorestframework = "^3.14.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
