@@ -26,10 +26,12 @@ Jinja2==3.1.2
 jsonschema==4.17.3
 keyring==23.13.1
 lockfile==0.12.2
+makefile==1.1.0
 MarkupSafe==2.1.2
 more-itertools==9.1.0
 msgpack==1.0.5
 mysqlclient==2.1.1
+-e git+https://github.com/GeumBinLee/ORM_prac.git@3c606538db9df915b18ceffdd7a0c52cac60ffe1#egg=orm_practice
 packaging==23.0
 pexpect==4.8.0
 pkginfo==1.9.6

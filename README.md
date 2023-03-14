@@ -1,1 +1,10 @@
-- Л≈╟Л┼╣Л ╘ М■└К║°Л═²М┼╦~~
+- ©╛╫ю©К га╥на╖ф╝
+- Django ORM ©╛╫ю
+- Poetry ╫г╫ю
+- Makefile ╫г╫ю
+- Black ╫г╫ю
+- Isort ╫г╫ю
+- MyPy ╫г╫ю
+- pre-commit ╫г╫ю
+
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
