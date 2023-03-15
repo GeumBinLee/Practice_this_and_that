@@ -1,4 +1,6 @@
 commit :
+	git add .pre-commit-config.yaml
 	git add .
-	git commit -m "Makefile practice and test"
-	git push origin main
+	pre-commit run
+	git commit -m "Use Makefile, pre-commit and black"
+	git push origin +main
