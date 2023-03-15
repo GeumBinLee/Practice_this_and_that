@@ -12,6 +12,7 @@ django = "^4.1.7"
 djangorestframework = "^3.14.0"
 makefile = "^1.1.0"
 make = "^0.1.6.post2"
+pre-commit = "^3.1.1"
 
 
 [build-system]
