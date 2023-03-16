@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "orm-practice"
 version = "0.1.0"
-description = "입사 첫째 날에 푼 sql문을 orm으로 뽑아내 보았다."
+description = "this and that 테스트."
 authors = ["금빈"]
 readme = "README.md"
 packages = [{include = "orm_practice"}]
@@ -13,6 +13,8 @@ djangorestframework = "^3.14.0"
 makefile = "^1.1.0"
 make = "^0.1.6.post2"
 pre-commit = "^3.1.1"
+isort = "^5.12.0"
+mypy = "^1.1.1"
 
 
 [build-system]
